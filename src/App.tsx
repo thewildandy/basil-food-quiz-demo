@@ -47,13 +47,31 @@ function App() {
       <div className="bg-gray-600 text-white text-xl p-6" style={{width: '400px'}}>
         <h2 className="font-bold">Food Quiz!</h2>
         {questions.map((q, i) => 
-          <div className="" key={i}>
-            <label className="block">{q.text}</label> 
-            <input type="text" className="block"/>
-          </div>
+          <Question key={i} text={q.text}/>
         )}
         <button className="bg-indigo-500 rounded-md p-2 mt-4">Submit!</button>
       </div>
+    </div>
+  )
+}
+
+/**
+ * Renders an individual question, comprised of the question text
+ * and an input for the answer.
+ */
+function Question(props: { text: string }) {
+
+  const [answer, setAnswer] = useState('')
+
+  return (
+    <div className="">
+      <label className="block">{props.text}</label> 
+      <input 
+        type="text" 
+        className="block text-black" 
+        value={answer}
+        onChange={(e) => setAnswer(e.target.value)}
+      />
     </div>
   )
 }

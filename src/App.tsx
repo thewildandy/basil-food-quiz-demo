@@ -4,18 +4,33 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc, collection, query, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 
-function App() {
+const firebaseConfig = {
+  apiKey: "AIzaSyAju55i18o-IQSelNHFtZMfxhJd70AFcAM",
+  authDomain: "basil-food-quiz-lesson.firebaseapp.com",
+  projectId: "basil-food-quiz-lesson",
+  storageBucket: "basil-food-quiz-lesson.appspot.com",
+  messagingSenderId: "458261520143",
+  appId: "1:458261520143:web:d68ec27b1000d52df2a87a"
+};
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAju55i18o-IQSelNHFtZMfxhJd70AFcAM",
-    authDomain: "basil-food-quiz-lesson.firebaseapp.com",
-    projectId: "basil-food-quiz-lesson",
-    storageBucket: "basil-food-quiz-lesson.appspot.com",
-    messagingSenderId: "458261520143",
-    appId: "1:458261520143:web:d68ec27b1000d52df2a87a"
-  };
-  const app = initializeApp(firebaseConfig)
-  const db = getFirestore(app)
+function App() {
+  return (
+    <div className="flex mt-6 justify-center">
+      <div className="bg-gray-600 text-white text-xl p-6" style={{width: '400px'}}>
+        <h2 className="font-bold">Food Quiz!</h2>
+        <FormController/>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Responsible for submitting the form answers and processing
+ * the result.
+ */
+function FormController() {
 
   const [questions, setQuestions] = useState([])
 
@@ -41,17 +56,14 @@ function App() {
       setQuestions(questions)
     })
   }, [])
-
+  
   return (
-    <div className="flex mt-6 justify-center">
-      <div className="bg-gray-600 text-white text-xl p-6" style={{width: '400px'}}>
-        <h2 className="font-bold">Food Quiz!</h2>
-        {questions.map((q, i) => 
-          <Question key={i} text={q.text}/>
-        )}
-        <button className="bg-indigo-500 rounded-md p-2 mt-4">Submit!</button>
-      </div>
-    </div>
+    <>
+      {questions.map((q, i) => 
+        <Question key={i} text={q.text}/>
+      )}
+      <button className="bg-indigo-500 rounded-md p-2 mt-4">Submit!</button>
+    </>
   )
 }
 
